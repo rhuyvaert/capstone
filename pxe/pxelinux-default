@@ -1,0 +1,13 @@
+DEFAULT ubuntu-autoinstall
+PROMPT 0
+TIMEOUT 50
+
+LABEL local
+	MENU LABEL Boot from Local Hard Drive
+	LOCALBOOT 0
+
+LABEL ubuntu-autoinstall
+	MENU LABEL Install Ubuntu Server (Auto-Installer)
+	KERNEL ubuntu/vmlinuz
+	INITRD ubuntu/initrd
+	APPEND root=/dev/ram0 ramdisk_size=2000000 ip=dhcp url=http://192.168.10.1:8085/ubuntu-24.04-live-server-amd64.iso autoinstall ds=nocloud-net\;s=http://192.168.10.1:8085/autoinstall/ ---

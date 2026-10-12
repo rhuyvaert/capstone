@@ -1,0 +1,38 @@
+Step 1. Ensure battery is removed if any and power and ethernet cables are securely inserted
+Step 2. Turn on computer and load into the BIOS.
+	Step 2A. Set PXE/Network Boot to ENABLED
+	Step 2B. Set Network Boot as first boot option
+	Step 2C. Set AC Recovery to ON to ensure device automatically powers on if power is lost once its restored
+	Step 2D. Set Wake-On-LAN to ENABLED
+	Step 2E. Disable Wi-Fi and Bluetooth chips at the motherboard level to ensure they are completely disabled
+	Step 2F. Set Intel VT-x or AMD-V to ENABLED to allow VMs and hardware-accelerated workloads
+	Step 2G. Set fans to always on or performance mode
+	Step 2H. Set Power Management to highest performance setting
+	Step 2I. Set internal GPU allocated memory to lowest value to ensure RAM is allocated to CPU
+	Step 2J. DISABLE secure boot and fast boot
+	Step 2K. If there is an internal battery, set charge limit to 50% to prevent battery swelling
+Step 3. Restart Computer
+Step 4. Allow Ubuntu Auto-Installer to work
+Step 5. After successful install, restart computer and remove network boot from boot order, can wait on this if needed as script will default to local drive
+Step 6. Log into machine and secure copy the Worker Node Network Setup script to it
+	Step 6A. to log into the machine from the head node run command 'ip neigh show dev enp4s0' to find the IP for the newly added node
+		then run SSH rhuyvaer@192.168.10.X where X is the specific subnet id of that node
+Step 7. Run the script and confirm access to Network File Share using command 'ping -c 4 192.168.10.1'
+	Step 7A. run the command 'df -h | grep /mnt/nfs' to confirm the NFS directory is mounted
+	Step 7B. run the command 'touch /mnt/nfs/test_node.txt && ls -la /mnt/nfs" to confirm the directory is writeable
+Step 8. Copy the head nodes ssh key to the worker node with the command 'ssh-copy-id rhuyvaer@192.168.10.x"
+	Step 8A. test the passwordless login works with command 'ssh rhuyvaer@192.168.10.x "hostname"'
+Step 9. Install and test MPI communication
+	Step 9A. On the worker node run the command 'sudo apt update && sudo apt install -y openmpi-bin libopenmpi-dev'
+	Step 9B. On the head node run a MPI test command 'mpirun -H 192.168.10.1,192.168.10.x -n 2 hostname'
+Step 10. Install and configure Slurm
+	Step 10A. On the worker node run command 'sudo apt install -y slurmd slurmmachined' to install slurm
+	Step 10B. Copy the files /etc/slurm/slurm.conf and slurm.cert/munge.key to the worker node
+	Step 10C. Start and enable the daemon with commands 'sudo systemctl enable --now munge' and 'sudo systemctl enable --now slurmd'
+	Step 10D. update the config file on the head node with the worker nodes exact specs
+		Step 10D-1. commands to register and resume the node 'sudo scontrol reconfigure' 'sudo scontrol update NodeName=node1 State=RESUME' 'sinfo'
+Step 11. Execute a test Slurm job
+	Step 11A. run the command 'srun -w node01 -N 1 hostname'
+	Step 11B. create a test file to test batch job
+	Step 11C. Submit the job and check output with commands 'sbatch /mnt/nfs/test_slurm.sh' and 'cat /mnt/nfs/poc_output.log'
+Step 12. take screenshots of all steps after step 3 to document everything

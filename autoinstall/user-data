@@ -3,36 +3,32 @@ autoinstall:
   version: 1
   refresh-installer:
     update: false
-    package_update: false
-    package_upgrade: false
   locale: en_US.UTF-8
   keyboard:
     layout: us
   identity:
-    hostname: node-01
+    # hostname is only a first-boot placeholder; configure_worker_net.sh sets the real one
+    hostname: node03
     username: rhuyvaer
-    password: "$6$rounds=400000$g62.y.4m$P914WJrZS5904xQ0M.E.T423W/gE5Z46Y8V89/I7H4J/01K/Y1"
-    # default password is hash of ubuntu
+    # SHA-512 hash, NOT the plain password. Generate with:  openssl passwd -6
+    password: "REDACTED"
   ssh:
     install-server: true
     allow-pw: true
   storage:
     layout:
       name: direct
-  # late commands that will run right before the installer finishes so it doesn't try to pull these files from the web
+  apt:
+    fallback: offline-install
+    geoip: false
+
+  # Late commands run right before the installer finishes, so nothing is pulled from the web
   late-commands:
-    # step 1, create a local repository source list on the newly installed node
-    - curtin in-target -- target=/target sh -c 'echo "deb [trusted=yes] http://192.168.10.1:8085/cluster-repo ./" > /etc/apt/sources.list.d/cluster.list'
-    
-    # step 2, update the package lists from the head node repo
-    - curtin in-target -- target=/target apt-get update
-    
-    # step 3, install all staged cluster packages offline
-    - curtin in-target -- target=/target apt-get install -y build-essential htop git gfortran libopenmpi-dev slurmd nfs-common
-    
-    # step 4, set up NFS shared mount point and fstab entry
-    - curtin in-target -- target=/target mkdir -p /mnt/nfs_shared
-    - curtin in-target -- target=/target sh -c 'echo "192.168.10.1:/srv/nfs/shared /mnt/nfs_shared nfs defaults 0 0" >> /etc/fstab'
-    
-    # step 5, enable Slurm daemon
-    - curtin in-target -- target=/target systemctl enable slurmd
+    # 1. use the head node repo as the only package source
+    - curtin in-target --target=/target -- sh -c 'echo "deb [trusted=yes] http://192.168.10.1:8085/cluster-repo ./" > /etc/apt/sources.list.d/cluster.list'
+    - curtin in-target --target=/target -- sh -c 'mv /etc/apt/sources.list.d/ubuntu.sources /etc/apt/sources.list.d/ubuntu.sources.bak || true'
+    - curtin in-target --target=/target -- apt-get update
+
+    # 2. base packages only. OpenMPI, OpenBLAS and HPL come from the shared /apps,
+    #    and setup_worker_nfs.sh installs the runtime libraries, NFS mounts, chrony, etc.
+    - curtin in-target --target=/target -- apt-get install -y build-essential htop git gfortran nfs-common

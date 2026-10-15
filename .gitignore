@@ -2,3 +2,9 @@
 *.iso
 *.deb
 *.tar.gz
+id_rsa*
+*.pem
+*.key
+munge.kkey
+*.swp
+*.log

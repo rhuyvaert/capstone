@@ -42,14 +42,18 @@ sudo chmod 600 $NETPLAN_CONF
 sudo netplan apply
 
 echo "[3/3] Syncing Cluster /etc/hosts Matrix..."
+sudo sed -i '/# BEGIN CLUSTER-HOSTS/,/# END CLUSTER-HOSTS/d' /etc/hosts
 cat <<EOF | sudo tee -a /etc/hosts > /dev/null
 
-# Beowulf Cluster Host Mapping
-192.168.10.1   headnode master
+# BEGIN CLUSTER-HOSTS
+192.168.10.1   gamerserver headnode master
 192.168.10.11  node01
 192.168.10.12  node02
 192.168.10.13  node03
 192.168.10.14  node04
+192.168.10.15  node05
+192.168.10.16  node06
+# END CLUSTER-HOSTS
 EOF
 
 echo "=== Worker Node $HOSTNAME Configuration Complete ==="

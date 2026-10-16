@@ -1,0 +1,15 @@
+# /etc/fstab: static file system information.
+#
+# Use 'blkid' to print the universally unique identifier for a
+# device; this may be used with UUID= as a more robust way to name devices
+# that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+# / was on /dev/sda2 during curtin installation
+/dev/disk/by-uuid/961ac785-4870-4b0c-a677-946caac8bf69 / ext4 defaults 0 1
+/swap.img	none	swap	sw	0	0
+# BEGIN CLUSTER-NFS
+192.168.10.1:/export/home/clusteruser /home/clusteruser nfs4 defaults,_netdev,nofail 0 0
+192.168.10.1:/export/apps			/apps		      nfs4 ro,_netdev,nofail       0 0
+192.168.10.1:/export/data			/data		      nfs4 defaults,_netdev,nofail 0 0
+# END CLUSTER-NFS

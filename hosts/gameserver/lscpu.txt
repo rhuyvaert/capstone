@@ -13,7 +13,7 @@ Core(s) per socket:                      8
 Socket(s):                               1
 Stepping:                                0
 Frequency boost:                         enabled
-CPU(s) scaling MHz:                      71%
+CPU(s) scaling MHz:                      66%
 CPU max MHz:                             4853.5850
 CPU min MHz:                             555.5310
 BogoMIPS:                                7600.30

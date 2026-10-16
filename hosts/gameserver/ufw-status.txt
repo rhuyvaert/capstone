@@ -9,6 +9,12 @@ Status: active
 [ 5] 111/udp                    ALLOW IN    192.168.10.0/24           
 [ 6] 2049/tcp                   ALLOW IN    192.168.10.0/24           
 [ 7] Anywhere                   ALLOW IN    192.168.10.0/24           
-[ 8] 8211/udp (v6)              ALLOW IN    Anywhere (v6)             
-[ 9] 22/tcp (v6)                ALLOW IN    Anywhere (v6)             
+[ 8] 67/udp on enp4s0           ALLOW IN    Anywhere                  
+[ 9] 69/udp on enp4s0           ALLOW IN    Anywhere                  
+[10] 8085/tcp on enp4s0         ALLOW IN    Anywhere                  
+[11] 8211/udp (v6)              ALLOW IN    Anywhere (v6)             
+[12] 22/tcp (v6)                ALLOW IN    Anywhere (v6)             
+[13] 67/udp (v6) on enp4s0      ALLOW IN    Anywhere (v6)             
+[14] 69/udp (v6) on enp4s0      ALLOW IN    Anywhere (v6)             
+[15] 8085/tcp (v6) on enp4s0    ALLOW IN    Anywhere (v6)             
 

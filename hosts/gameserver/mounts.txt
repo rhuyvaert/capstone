@@ -1,0 +1,9 @@
+TARGET                SOURCE                                          FSTYPE  OPTIONS
+/                     /dev/mapper/ubuntu--vg-ubuntu--lv               ext4    rw,relatime
+├─/boot               /dev/sdc2                                       ext4    rw,relatime
+│ └─/boot/efi         /dev/sdc1                                       vfat    rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro
+├─/mnt/nextcloud_data /dev/md0                                        ext4    rw,relatime
+├─/srv/nfs/ubuntu-iso /dev/loop0                                      iso9660 ro,relatime,nojoliet,check=s,map=n,blocksize=2048,iocharset=utf8
+├─/home               /dev/mapper/ubuntu--vg-ubuntu--lv[/export/home] ext4    rw,relatime
+├─/apps               /dev/mapper/ubuntu--vg-ubuntu--lv[/export/apps] ext4    rw,relatime
+└─/data               /dev/mapper/ubuntu--vg-ubuntu--lv[/export/data] ext4    rw,relatime

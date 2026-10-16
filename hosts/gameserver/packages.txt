@@ -1,5 +1,6 @@
 bash
 ca-certificates
+chrony
 containerd.io
 curl
 dash
@@ -34,7 +35,6 @@ shim-signed
 slurm-wlm
 slurmd
 syslinux-common
-systemd-timesyncd
 tftpd-hpa
 ubuntu-minimal
 ubuntu-server

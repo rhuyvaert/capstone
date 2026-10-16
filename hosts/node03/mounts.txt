@@ -1,0 +1,5 @@
+TARGET              SOURCE                                FSTYPE OPTIONS
+/                   /dev/sda2                             ext4   rw,relatime
+├─/data             192.168.10.1:/export/data             nfs4   rw,relatime,vers=4.2,rsize=1048576,wsize=1048576,namlen=255,hard,fatal_neterrors=none,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=192.168.10.13,local_lock=none,addr=192.168.10.1
+├─/home/clusteruser 192.168.10.1:/export/home/clusteruser nfs4   rw,relatime,vers=4.2,rsize=1048576,wsize=1048576,namlen=255,hard,fatal_neterrors=none,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=192.168.10.13,local_lock=none,addr=192.168.10.1
+└─/apps             192.168.10.1:/export/apps             nfs4   ro,relatime,vers=4.2,rsize=1048576,wsize=1048576,namlen=255,hard,fatal_neterrors=none,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=192.168.10.13,local_lock=none,addr=192.168.10.1

@@ -1,0 +1,7 @@
+MS Name/IP address         Stratum Poll Reach LastRx Last sample               
+===============================================================================
+^+ ntp-nts-2.ps5.canonical.>     2  10   377   926   +170us[  +16us] +/-   55ms
+^+ ntp-nts-3.ps5.canonical.>     2  10   377   245   -837us[ -837us] +/-   57ms
+^* ntp-nts-2.ps6.canonical.>     2  10   377   635     +0ns[ -155us] +/-   42ms
+^+ ntp-nts-3.ps6.canonical.>     2  10   377   834  -2072us[-2226us] +/-   42ms
+^- ntp-nts-1.ps6.canonical.>     2  10   377   448  -1165us[-1165us] +/-   42ms

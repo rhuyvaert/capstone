@@ -1,2 +1,4 @@
 gameserver slots=8
+node01 slots=2
 node02 slots=2
+node03 slots=2

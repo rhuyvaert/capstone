@@ -1,0 +1,9 @@
+# Build record, generated 2026-10-16
+## OpenMPI
+                Open MPI: 5.0.11
+  Configure command line: '--prefix=/apps/openmpi' '--with-pmix' '--with-libevent'
+## OpenBLAS
+#define OPENBLAS_VERSION " OpenBLAS 0.3.34 "
+## HPL
+/apps/src/hpl-2.3
+/apps/src/hpl-2.3.tar.gz

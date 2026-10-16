@@ -1,0 +1,4 @@
+Host 192.168.10.* node* gameserver
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+    LogLevel ERROR

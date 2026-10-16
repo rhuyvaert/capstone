@@ -1,4 +1,5 @@
 127.0.0.1     gameserver
-192.168.10.1  gameserver
+192.168.10.1  gameserver headnode master
 192.168.10.11 node01
 192.168.10.12 node02
+192.168.10.13 node03

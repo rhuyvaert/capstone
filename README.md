@@ -6,24 +6,24 @@ mount that is shared between all worker nodes in the cluster
 
 
 
-root/
-|---etc/
-|   |---chrony/
-|   |   |---chrony.conf
-|   |   |---conf.d/cluster.conf
-|   |---dnsmasq.d
-|   |---exports
-|   |---fstab
-|   |---hosts
-|   |---netplan/
-|   |---nfs.conf
-|   |---nginx/
-|   |   |---conf.d
-|
-|---home/
-|   |---clusteruser/
-|       |---hostfile
-|       |---clusteruser.bashrc
+root/ \n
+|---etc/ \n
+|   |---chrony/ \n
+|   |   |---chrony.conf \n
+|   |   |---conf.d/cluster.conf \n
+|   |---dnsmasq.d \n
+|   |---exports \n
+|   |---fstab \n
+|   |---hosts \n
+|   |---netplan/ \n
+|   |---nfs.conf \n
+|   |---nginx/ \n
+|   |   |---conf.d \n
+| \n
+|---home/ \n
+|   |---clusteruser/ \n
+|       |---hostfile \n
+|       |---clusteruser.bashrc \n
 |       |---hpl-runs
 |
 |

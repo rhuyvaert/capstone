@@ -9,7 +9,13 @@ mount that is shared between all worker nodes in the cluster.
 - All nodes in this cluster use Ubuntu Server LTS 26.04
     - For more detailed version and individual node information, go to hosts/gameserver and node/node*
 - A list of all the required programs to run the cluster can be found in pxe/cluster-repo-packages.txt
-- The raw results of each test run can be found in /results for both HPL and Sysbench 
+- The raw results of each test run can be found in /results for both HPL and Sysbench
+
+## Results
+ All results are broken down into two (2) parts
+ 1. Raw CSV files that contain all results for each node and a combined CSV table
+ 2. Text files containing additional information about test parameters and node environment variables
+As test results get synthesized, additional documents with useful insights and charts/graphs will be added
 
 ## Directory Structure Overview
 ```text
@@ -32,7 +38,7 @@ root/
 |       |---hostfile 
 |       |---clusteruser.bashrc 
 |       |---hpl-runs
-|
+|       |---results
 |
 |---srv/
 |   |---nfs/

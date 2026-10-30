@@ -12,6 +12,7 @@ docker-ce-cli
 docker-compose-plugin
 dpkg-dev
 efibootmgr
+etherwake
 ethtool
 findutils
 gnupg
@@ -26,6 +27,7 @@ linux-generic
 mdadm
 ncurses-base
 ncurses-bin
+net-tools
 nfs-kernel-server
 openmpi-bin
 openssh-server
@@ -34,6 +36,7 @@ pxelinux
 shim-signed
 slurm-wlm
 slurmd
+sysbench
 syslinux-common
 tftpd-hpa
 ubuntu-minimal

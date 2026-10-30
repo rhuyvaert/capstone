@@ -133,6 +133,8 @@ liblsan0_16-20260322-1ubuntu1_amd64.deb
 libltdl-dev_2.5.4-9_amd64.deb
 libltdl7_2.5.4-9_amd64.deb
 liblua5.1-0_5.1.5-12_amd64.deb
+libluajit-5.1-2_2.1.0+openresty20251030-1_amd64.deb
+libluajit-5.1-common_2.1.0+openresty20251030-1_all.deb
 liblz4-1_1.10.0-8_amd64.deb
 liblzma5_5.8.3-1_amd64.deb
 libmd0_1.1.0-2build4_amd64.deb
@@ -140,6 +142,7 @@ libmount1_2.41.3-3ubuntu2.2_amd64.deb
 libmpc3_1.3.1-3_amd64.deb
 libmpfr6_4.2.2-3_amd64.deb
 libmunge2_0.5.16-1.1_amd64.deb
+libmysqlclient24_8.4.11-0ubuntu0.26.04.1_amd64.deb
 libncursesw6_6.6+20251231-1_amd64.deb
 libnewt0.52_0.52.25-1ubuntu3_amd64.deb
 libnfsidmap1_1%3a2.8.5-1ubuntu1_amd64.deb
@@ -159,6 +162,7 @@ libpcre2-8-0_10.46-1build1_amd64.deb
 libperl5.40_5.40.1-7ubuntu0.3_amd64.deb
 libpmix-dev_6.0.0+really5.0.9-3build1_amd64.deb
 libpmix2t64_6.0.0+really5.0.9-3build1_amd64.deb
+libpq5_18.6-0ubuntu0.26.04.1_amd64.deb
 libproc2-0_2%3a4.0.4-9ubuntu1_amd64.deb
 libprrte-bin_3.0.13-2_amd64.deb
 libprrte-dev_3.0.13-2_amd64.deb
@@ -176,6 +180,7 @@ libslang2_2.3.3-5build1_amd64.deb
 libsmartcols1_2.41.3-3ubuntu2.2_amd64.deb
 libssl3t64_3.5.5-1ubuntu3.7_amd64.deb
 libstdc++-15-dev_15.2.0-16ubuntu1_amd64.deb
+libstdc++6-16-dbg_16-20260322-1ubuntu1_amd64.deb
 libstdc++6_16-20260322-1ubuntu1_amd64.deb
 libsystemd-shared_259.5-0ubuntu3.4_amd64.deb
 libsystemd0_259.5-0ubuntu3.4_amd64.deb
@@ -209,6 +214,7 @@ make-guile_4.4.1-3_amd64.deb
 make_4.4.1-3_amd64.deb
 mount_2.41.3-3ubuntu2.2_amd64.deb
 munge_0.5.16-1.1_amd64.deb
+mysql-common_5.8+1.1.1ubuntu2_all.deb
 nfs-common_1%3a2.8.5-1ubuntu1_amd64.deb
 ocl-icd-libopencl1_2.3.4-1_amd64.deb
 openmpi-bin_5.0.10-1_amd64.deb
@@ -229,6 +235,7 @@ rust-coreutils_0.10.0-1ubuntu2~26.04.1_amd64.deb
 sensible-utils_0.0.26build1_all.deb
 slurm-wlm-basic-plugins_25.11.2-1ubuntu2_amd64.deb
 slurmd_25.11.2-1ubuntu2_amd64.deb
+sysbench_1.0.20+ds-7build2_amd64.deb
 systemd-standalone-sysusers_259.5-0ubuntu3.4_amd64.deb
 systemd_259.5-0ubuntu3.4_amd64.deb
 tar_1.35+dfsg-4ubuntu0.4_amd64.deb

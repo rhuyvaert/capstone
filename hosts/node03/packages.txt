@@ -19,6 +19,7 @@ ncurses-base
 ncurses-bin
 nfs-common
 openssh-server
+sysbench
 ubuntu-minimal
 ubuntu-server
 ubuntu-server-minimal

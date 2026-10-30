@@ -21,6 +21,7 @@ openmpi-bin
 openssh-server
 shim-signed
 slurmd
+sysbench
 ubuntu-minimal
 ubuntu-server
 ubuntu-server-minimal

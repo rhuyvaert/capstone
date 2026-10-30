@@ -6,6 +6,7 @@ REPO_DIR="${REPO_DIR:-/local/rhuyvaer/cluster-config-repo}"
 SCRIPTS_DIR="${SCRIPTS_DIR:-/scripts}"
 CLUSTER_HOME="${CLUSTER_HOME:-/home/clusteruser}"
 WWW_DIR="${WWW_DIR:-/srv/www}"
+DATA_DIR="${DATA_DIR:-/data}"
 HOSTFILE="$CLUSTER_HOME/hostfile"
 HOST="$(hostname)"
 
@@ -35,7 +36,7 @@ copy() {
     echo "  ok       $src"
 }
 # advanced copy function that copies top-level regular files from a directory
-copy_dir()  {
+copy_dir() {
     local srcdir="$1" destdir="$2" f
     shift 2
     if ! sudo test -d "$srcdir"; then
@@ -44,6 +45,18 @@ copy_dir()  {
     while IFS= read -r -d '' f; do
         copy "$f" "$destdir/$(basename "$f")"
     done < <(sudo find "$srcdir" -maxdepth 1 -type f "$@" -print0)
+}
+# recursive copy function that preserves sub-directory relative paths for benchmark logs
+copy_tree() {
+    local srcdir="$1" destdir="$2" f rel
+    shift 2
+    if ! sudo test -d "$srcdir"; then
+        echo "  skipped $scrdir/ (not found)"; return 0
+    fi
+    while IFS= read -r -d '' f; do
+        rel="${f#$srcdir/}"
+        copy "$f" "$destdir/$rel"
+    done < <(sudo find "$srcdir" -type f "$@" -print0)
 }
 # a snapshot function that saves outputs of commonly used commands
 snap() {
@@ -134,9 +147,15 @@ mkdir -p build
     ls -d /apps/src/hpl-* 2>/dev/null || echo "(not found)"
 } > build/versions.txt
 echo " ok	build/versions.txt"
-# only include small result files (>1MB)
-copy_dir /data/hpl_logs			results/hpl_logs	-size -1M
-copy_dir /data/sysbench_logs		results/sysbench_logs	-size -1M
+
+# new benchmark logs
+copy_dir "$DATA_DIR/results"			results/csv		-name '*_results.csv'
+copy "$DATA_DIR/results/combined.csv"		results/csv/combined.csv
+copy_tree "$DATA_DIR/bench_logs"		results/bench_logs	-size -2M
+
+# legacy logs (preserved)
+copy_dir "$DATA_DIR/hpl_logs"			results/hpl_logs	-size -1M
+copy_dir "$DATA_DIR/sysbench_logs"		results/sysbench_logs	-size -1M
 
 # 6. Current state snapshots ---------------------------------------------------------
 echo "[6/7] Snapshots of $HOST"
@@ -176,12 +195,16 @@ for node in $NODES; do
     remote_to "$node" "$d/ip-addr.txt"		"ip -br a"
     remote_to "$node" "$d/packages.txt"		"apt-mark showmanual"
     remote_to "$node" "$d/chrony-sources.txt"	"chronyc sources"
+
+    # double check that benchmark logs weren't stored in local disk
+    remote_to "$node" "results/csv/${node}_results.csv" "cat /data/results/${node}_results.csv 2>/dev/null || true"
+    remote_to "$node" "results/bench_logs/${node}_state.env" "cat /data/bench_logs/${node}/state.env 2>/dev/null || true"
 done
 # the netplan for worker nodes is made by the configure_worker_net.sh file in scripts
 # fix ownership to prevent commit conflicts
 
 # CLEANUP ---------------------------------------------------------------------------
 sudo chown -R rhuyvaer:rhuyvaer "$REPO_DIR"
-rm "$dest.tmp"
+rm -f "$REPO_DIR"/*.tmp 2>/dev/null || true
 echo "Sync complete! Ready to commit."
 git status --short

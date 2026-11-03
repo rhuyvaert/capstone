@@ -11,6 +11,7 @@ gzip
 hostname
 htop
 init
+iperf3
 libevent-dev
 libhwloc-dev
 libpmix-dev

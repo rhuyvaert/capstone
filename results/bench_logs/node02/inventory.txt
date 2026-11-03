@@ -45,7 +45,7 @@ Vulnerability Tsx async abort:           Not affected
 Vulnerability Vmscape:                   Mitigation; IBPB before exit to userspace
 
                total        used        free      shared  buff/cache   available
-Mem:           3.2Gi       556Mi       960Mi       5.5Mi       2.0Gi       2.7Gi
+Mem:           3.2Gi       555Mi       950Mi       5.5Mi       2.0Gi       2.7Gi
 Swap:          3.7Gi          0B       3.7Gi
 
 NAME ROTA   SIZE MODEL                TRAN

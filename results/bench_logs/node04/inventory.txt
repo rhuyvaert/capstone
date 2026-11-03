@@ -12,7 +12,7 @@ Thread(s) per core:                      1
 Core(s) per socket:                      6
 Socket(s):                               1
 Stepping:                                10
-CPU(s) scaling MHz:                      96%
+CPU(s) scaling MHz:                      91%
 CPU max MHz:                             3500.0000
 CPU min MHz:                             800.0000
 BogoMIPS:                                4199.88
@@ -45,7 +45,7 @@ Vulnerability Tsx async abort:           Mitigation; TSX disabled
 Vulnerability Vmscape:                   Mitigation; IBPB before exit to userspace
 
                total        used        free      shared  buff/cache   available
-Mem:            14Gi       617Mi        14Gi       1.7Mi       613Mi        14Gi
+Mem:            14Gi       613Mi        13Gi       1.7Mi       634Mi        14Gi
 Swap:          4.0Gi          0B       4.0Gi
 
 NAME ROTA   SIZE MODEL           TRAN

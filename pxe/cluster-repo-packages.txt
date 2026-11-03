@@ -45,6 +45,7 @@ guile-3.0-libs_3.0.11-2_amd64.deb
 htop_3.4.1-5build2_amd64.deb
 ibverbs-providers_61.0-2ubuntu3_amd64.deb
 init-system-helpers_1.69_all.deb
+iperf3_3.20-2_amd64.deb
 keyutils_1.6.3-6ubuntu3_amd64.deb
 libacl1_2.3.2-2_amd64.deb
 libamd-comgr3_7.1.1+dfsg-0ubuntu1_amd64.deb
@@ -117,6 +118,7 @@ libibmad5_61.0-2ubuntu3_amd64.deb
 libibumad3_61.0-2ubuntu3_amd64.deb
 libibverbs-dev_61.0-2ubuntu3_amd64.deb
 libibverbs1_61.0-2ubuntu3_amd64.deb
+libiperf0_3.20-2_amd64.deb
 libisl23_0.27-1build1_amd64.deb
 libitm1_16-20260322-1ubuntu1_amd64.deb
 libjansson4_2.14-2build4_amd64.deb
@@ -143,6 +145,7 @@ libmpc3_1.3.1-3_amd64.deb
 libmpfr6_4.2.2-3_amd64.deb
 libmunge2_0.5.16-1.1_amd64.deb
 libmysqlclient24_8.4.11-0ubuntu0.26.04.1_amd64.deb
+libncurses5_6.3-2ubuntu0.3_amd64.deb
 libncursesw6_6.6+20251231-1_amd64.deb
 libnewt0.52_0.52.25-1ubuntu3_amd64.deb
 libnfsidmap1_1%3a2.8.5-1ubuntu1_amd64.deb
@@ -171,6 +174,7 @@ libpsm2-2_11.2.185-2.1build1_amd64.deb
 libquadmath0_16-20260322-1ubuntu1_amd64.deb
 librdmacm1t64_61.0-2ubuntu3_amd64.deb
 libreadline8t64_8.3-4_amd64.deb
+libsctp1_1.0.21+dfsg-1build2_amd64.deb
 libselinux1_3.9-4build1_amd64.deb
 libsemanage-common_3.9-1build1_all.deb
 libsemanage2_3.9-1build1_amd64.deb
@@ -187,6 +191,7 @@ libsystemd0_259.5-0ubuntu3.4_amd64.deb
 libtext-charwidth-perl_0.04-11build4_amd64.deb
 libtext-wrapi18n-perl_0.06-10_all.deb
 libtextwrap1_0.1-17build2_amd64.deb
+libtinfo5_6.3-2ubuntu0.3_amd64.deb
 libtinfo6_6.6+20251231-1_amd64.deb
 libtsan2_16-20260322-1ubuntu1_amd64.deb
 libubsan1_16-20260322-1ubuntu1_amd64.deb

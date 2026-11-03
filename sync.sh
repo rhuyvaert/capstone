@@ -4,6 +4,7 @@ set -euo pipefail # reports missing files
 # this shell script doesn't push or commit anything to github, review local distro first then manually commit and push
 REPO_DIR="${REPO_DIR:-/local/rhuyvaer/cluster-config-repo}"
 SCRIPTS_DIR="${SCRIPTS_DIR:-/scripts}"
+BENCH_DIR="${BENCH_DIR:-/apps}"
 CLUSTER_HOME="${CLUSTER_HOME:-/home/clusteruser}"
 WWW_DIR="${WWW_DIR:-/srv/www}"
 DATA_DIR="${DATA_DIR:-/data}"
@@ -111,6 +112,10 @@ snap pxe/cluster-repo-packages.txt bash -c "ls '$WWW_DIR/cluster-repo' | grep -F
 echo "[2/7] cluster scripts from $SCRIPTS_DIR"
 copy_dir "$SCRIPTS_DIR" scripts -name '* .sh'
 chmod +x scripts/*.sh 2>/dev/null || true
+copy "$BENCH_DIR/benchmark.sh"		scripts/benchmark.sh
+copy "$BENCH_DIR/check_node.sh"		scripts/check_node.sh
+copy "$BENCH_DIR/netbench.sh"		scripts/netbench.sh
+copy "$BENCH_DIR/clusterbench.sh"	scripts/clusterbench.sh
 
 # 3. Headnode config files ---------------------------------------------------------------
 echo "[3/7] Head node configuration files from ($HOST)"

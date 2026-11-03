@@ -1,8 +1,8 @@
 MS Name/IP address         Stratum Poll Reach LastRx Last sample               
 ===============================================================================
-^* gameserver                    3   6   377    12   -544us[ -541us] +/-   41ms
-^+ ntp-nts-2.ps5.canonical.>     2  10   377   722    +25us[  -15us] +/-   53ms
-^+ ntp-nts-3.ps5.canonical.>     2  10   377   660    -64us[  -95us] +/-   52ms
-^+ ntp-nts-2.ps6.canonical.>     2  10   377   618   -416us[ -412us] +/-   43ms
-^+ ntp-nts-3.ps6.canonical.>     2  10   377   315   -935us[ -893us] +/-   43ms
-^- ntp-nts-1.ps5.canonical.>     2  10   377   786  -1015us[-1053us] +/-   53ms
+^? gameserver                    3   9   377    31   +705us[ +705us] +/-   42ms
+^+ ntp-nts-2.ps5.canonical.>     2  10   377   229   +570us[ +570us] +/-   52ms
+^+ ntp-nts-3.ps5.canonical.>     2  10   377   137   -224us[ -224us] +/-   54ms
+^+ ntp-nts-2.ps6.canonical.>     2  10   377   947   -629us[ -736us] +/-   42ms
+^* ntp-nts-3.ps6.canonical.>     2  10   377   687  -1038us[-1146us] +/-   43ms
+^- ntp-nts-1.ps5.canonical.>     2  10   377   263   -182us[ -182us] +/-   54ms

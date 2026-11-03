@@ -22,7 +22,11 @@ grub-efi-amd64-signed
 gzip
 hostname
 init
+iperf3
+libncurses6
+libncursesw6
 libopenmpi-dev
+libtinfo6
 linux-generic
 mdadm
 ncurses-base
@@ -44,6 +48,7 @@ ubuntu-server
 ubuntu-server-minimal
 ubuntu-standard
 ufw
+unzip
 util-linux
 whois
 wpasupplicant

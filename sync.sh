@@ -116,6 +116,7 @@ copy "$BENCH_DIR/benchmark.sh"		scripts/benchmark.sh
 copy "$BENCH_DIR/check_node.sh"		scripts/check_node.sh
 copy "$BENCH_DIR/netbench.sh"		scripts/netbench.sh
 copy "$BENCH_DIR/clusterbench.sh"	scripts/clusterbench.sh
+copy "$BENCH_DIR/cluster.sh"		scripts/cluster.sh
 
 # 3. Headnode config files ---------------------------------------------------------------
 echo "[3/7] Head node configuration files from ($HOST)"

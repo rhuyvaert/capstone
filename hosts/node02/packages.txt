@@ -11,6 +11,7 @@ grub-efi-amd64-signed
 gzip
 hostname
 init
+iperf3
 libopenmpi-dev
 linux-generic
 munge

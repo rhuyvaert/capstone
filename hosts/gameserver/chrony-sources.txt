@@ -1,7 +1,7 @@
 MS Name/IP address         Stratum Poll Reach LastRx Last sample               
 ===============================================================================
-^+ ntp-nts-2.ps5.canonical.>     2  10   377   695   -643us[ -643us] +/-   53ms
-^+ ntp-nts-3.ps5.canonical.>     2  10   377   469   +496us[ +496us] +/-   52ms
-^+ ntp-nts-2.ps6.canonical.>     2  10   377   882   +387ns[-8069ns] +/-   42ms
-^* ntp-nts-3.ps6.canonical.>     2  10   377   814  -2380us[-2388us] +/-   43ms
-^- ntp-nts-1.ps5.canonical.>     2  10   377   651  -3040us[-3040us] +/-   53ms
+^+ ntp-nts-2.ps5.canonical.>     2  10   377   759   +530us[ +530us] +/-   52ms
+^+ ntp-nts-3.ps5.canonical.>     2  10   377   546    -29us[  -29us] +/-   53ms
+^+ ntp-nts-2.ps6.canonical.>     2  10   377   996   +484us[ +370us] +/-   40ms
+^* ntp-nts-3.ps6.canonical.>     2  10   377   937  -1258us[-1372us] +/-   42ms
+^- ntp-nts-1.ps5.canonical.>     2  10   377   628   -176us[ -176us] +/-   52ms

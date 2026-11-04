@@ -10,7 +10,7 @@ set -uo pipefail
 DATA="${DATA_DIR:-/data}"
 HOST="$(hostname -s)"
 HPL="${HPL_BIN:-$HOME/hpl-run/xhpl}"
-OSU="${OSU_DIR:-/apps/osu/libecex/osu-micro-benchmarks/mpi}"
+OSU="${OSU_DIR:-/apps/osu/libexec/osu-micro-benchmarks/mpi}"
 HOSTFILE="${HOSTFILE:-$HOME/hostfile}"
 WORKERS="${WORKERS:-$(awk '!/^[[:space:]]*#/ && NF {print $1}' "$HOSTFILE" 2> /dev/null | grep -vx "$HOST" | tr '\n' ' ')}"
 REPO_DIR="${REPO_DIR:-/srv/www/cluster-repo}"
@@ -29,15 +29,14 @@ rsh() {						# determine if local shell or ssh to connect
     else ssh -nn -o BatchMode=yes -o ConnectTimeout=5 "$n" "$@";
     fi
 }
-rnode() {					# parse csv files for each node and get required information to sort nodes by speed
-    local f="$DATA/results/{$1}_results.csv"
+rnode() {  # parse csv files for each node and get required information to sort nodes by speed
+    local f="$DATA/results/${1}_results.csv" ov="RNODE_$1"
+    [ -n "${!ov:-}" ] && { echo "${!ov}"; return; }
     [ -s "$f" ] || return 0
-    awk -F, 'NR==1{old = ($3=="test_id"); next}
-             old  && $3=="A7" && $6=="rmax_node" {print $7}
-             !old && $3=="A7" && $4=="maxN" && $5=="gflops" && $6!="" {print $6}' "$f" \
-        | sort -n | awk '{a[NR]=$1} END{if (NR) print (NR%2) ? a[(NR+1)/2] : (a[NR/2] + a[NR/2+1])/2}'
+    awk -F, 'NR==1{next}
+             $3=="A7" && $5=="gflops" && $6!="" {print $6}' "$f" \
+        | sort -n | awk '{a[NR]=$1} END{if (NR) print (NR%2) ? a[(NR+1)/2] : (a[NR/2] + a[(NR/2)+1])/2}'
 }
-
 cores()    { lscpu -p=CORE,SOCKET | grep -v '^#' | sort -u | wc -l; }
 threads()  { getconf _NPROCESSORS_ONLN; }
 mem_kb()   { awk '/^MemTotal:/{print $2}' /proc/meminfo; }

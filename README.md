@@ -61,13 +61,20 @@ root/
 |       |---autoinstall/
 |       |   |---meta-data, user-data, vendor-data
 |       |---cluster-repo/
-|       |   |---"local copies of all necessary software goes here with a package list and package.gz file"
+|       |   |---"local copies of all necessary software go here with a package list and package.gz file"
 |       |---default.conf
 ```
 
-## Section 3
- All results are broken down into two (2) parts
+## Section 3 (Results)
+ All results are broken down into three (3) parts
  1. Raw CSV files that contain all results for each node and a combined CSV table
  2. Text files containing additional information about test parameters and node environment variables
+ 3. Screenshots of test runs showing what the expected output of the terminal should look like
+
+### Layout
+- The results section of the repository has a folder for each of the three types of results labeled **bench_logs**, **csv**, and **screenshots**
+- The naming convention for each text file is YYYYMMDD_TIME_TEST#_TESTTYPE
+
+
 
 

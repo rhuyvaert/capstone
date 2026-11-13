@@ -21,6 +21,7 @@ nfs-common
 openmpi-bin
 openssh-server
 shim-signed
+slurm-client
 slurmd
 sysbench
 ubuntu-minimal

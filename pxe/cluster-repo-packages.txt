@@ -21,6 +21,7 @@ debconf_1.5.92_all.deb
 debianutils_5.23.2build1_amd64.deb
 dpkg-dev_1.23.7ubuntu1_all.deb
 dpkg_1.23.7ubuntu1_amd64.deb
+freeipmi-common_1.6.16-1ubuntu0.2_all.deb
 g++-15-x86-64-linux-gnu_15.2.0-16ubuntu1_amd64.deb
 g++-15_15.2.0-16ubuntu1_amd64.deb
 g++-x86-64-linux-gnu_4%3a15.2.0-5ubuntu1_amd64.deb
@@ -79,6 +80,10 @@ libdebian-installer4_0.125ubuntu3_amd64.deb
 libdpkg-perl_1.23.7ubuntu1_all.deb
 libdrm-amdgpu1_2.4.131-1_amd64.deb
 libdrm-common_2.4.131-1_all.deb
+libdrm-dev_2.4.131-1_amd64.deb
+libdrm-intel1_2.4.131-1_amd64.deb
+libdrm-nouveau2_2.4.131-1_amd64.deb
+libdrm-radeon1_2.4.131-1_amd64.deb
 libdrm2_2.4.131-1_amd64.deb
 libedit2_3.1-20251016-1_amd64.deb
 libelf1t64_0.194-4_amd64.deb
@@ -91,6 +96,7 @@ libevent-pthreads-2.1-7t64_2.1.12-stable-10ubuntu0.2_amd64.deb
 libfabric1_2.1.0-1.1build1_amd64.deb
 libffi8_3.5.2-4_amd64.deb
 libfido2-1_1.16.0-2build1_amd64.deb
+libfreeipmi17_1.6.16-1ubuntu0.2_amd64.deb
 libfuse3-4_3.18.2-1_amd64.deb
 libgc1_1%3a8.2.12-1_amd64.deb
 libgcc-15-dev_15.2.0-16ubuntu1_amd64.deb
@@ -107,6 +113,8 @@ libgomp1_16-20260322-1ubuntu1_amd64.deb
 libgpg-error0_1.58-2_amd64.deb
 libgprofng0_2.46-3ubuntu2_amd64.deb
 libgssapi-krb5-2_1.22.1-2ubuntu4.1_amd64.deb
+libhdf5-310_1.14.6+repack-2_amd64.deb
+libhdf5-hl-310_1.14.6+repack-2_amd64.deb
 libhsa-runtime64-1_7.1.0+dfsg-0ubuntu9_amd64.deb
 libhsakmt1_7.1.0+dfsg-0ubuntu9_amd64.deb
 libhttp-parser2.9_2.9.4-6build2_amd64.deb
@@ -119,6 +127,7 @@ libibumad3_61.0-2ubuntu3_amd64.deb
 libibverbs-dev_61.0-2ubuntu3_amd64.deb
 libibverbs1_61.0-2ubuntu3_amd64.deb
 libiperf0_3.20-2_amd64.deb
+libipmimonitoring6_1.6.16-1ubuntu0.2_amd64.deb
 libisl23_0.27-1build1_amd64.deb
 libitm1_16-20260322-1ubuntu1_amd64.deb
 libjansson4_2.14-2build4_amd64.deb
@@ -155,11 +164,14 @@ libnl-route-3-200_3.12.0-2_amd64.deb
 libnl-route-3-dev_3.12.0-2_amd64.deb
 libnuma-dev_2.0.19-1build1_amd64.deb
 libnuma1_2.0.19-1build1_amd64.deb
+liboam-dev_7.1.1-0ubuntu1_amd64.deb
+liboam7_7.1.1-0ubuntu1_amd64.deb
 libopenmpi-dev_5.0.10-1_amd64.deb
 libopenmpi40_5.0.10-1_amd64.deb
 libpam-modules-bin_1.7.0-5ubuntu3.2_amd64.deb
 libpam-modules_1.7.0-5ubuntu3.2_amd64.deb
 libpam0g_1.7.0-5ubuntu3.2_amd64.deb
+libpciaccess-dev_0.18.1-1ubuntu4.1_amd64.deb
 libpciaccess0_0.18.1-1ubuntu4.1_amd64.deb
 libpcre2-8-0_10.46-1build1_amd64.deb
 libperl5.40_5.40.1-7ubuntu0.3_amd64.deb
@@ -174,6 +186,8 @@ libpsm2-2_11.2.185-2.1build1_amd64.deb
 libquadmath0_16-20260322-1ubuntu1_amd64.deb
 librdmacm1t64_61.0-2ubuntu3_amd64.deb
 libreadline8t64_8.3-4_amd64.deb
+librocm-smi-dev_7.1.1-0ubuntu1_amd64.deb
+librocm-smi64-7_7.1.1-0ubuntu1_amd64.deb
 libsctp1_1.0.21+dfsg-1build2_amd64.deb
 libselinux1_3.9-4build1_amd64.deb
 libsemanage-common_3.9-1build1_all.deb
@@ -188,6 +202,7 @@ libstdc++6-16-dbg_16-20260322-1ubuntu1_amd64.deb
 libstdc++6_16-20260322-1ubuntu1_amd64.deb
 libsystemd-shared_259.5-0ubuntu3.4_amd64.deb
 libsystemd0_259.5-0ubuntu3.4_amd64.deb
+libsz2_1.1.5-1_amd64.deb
 libtext-charwidth-perl_0.04-11build4_amd64.deb
 libtext-wrapi18n-perl_0.06-10_all.deb
 libtextwrap1_0.1-17build2_amd64.deb
@@ -238,7 +253,16 @@ rpcbind_1.2.7-1build2_amd64.deb
 rpcsvc-proto_1.4.3-1build1_amd64.deb
 rust-coreutils_0.10.0-1ubuntu2~26.04.1_amd64.deb
 sensible-utils_0.0.26build1_all.deb
+slurm-client_25.11.2-1ubuntu2_amd64.deb
 slurm-wlm-basic-plugins_25.11.2-1ubuntu2_amd64.deb
+slurm-wlm-elasticsearch-plugin_25.11.2-1ubuntu2_amd64.deb
+slurm-wlm-hdf5-plugin_25.11.2-1ubuntu2_amd64.deb
+slurm-wlm-influxdb-plugin_25.11.2-1ubuntu2_amd64.deb
+slurm-wlm-ipmi-plugins_25.11.2-1ubuntu2_amd64.deb
+slurm-wlm-jwt-plugin_25.11.2-1ubuntu2_amd64.deb
+slurm-wlm-mysql-plugin_25.11.2-1ubuntu2_amd64.deb
+slurm-wlm-plugins_25.11.2-1ubuntu2_amd64.deb
+slurm-wlm-rsmi-plugin_25.11.2-1ubuntu2_amd64.deb
 slurmd_25.11.2-1ubuntu2_amd64.deb
 sysbench_1.0.20+ds-7build2_amd64.deb
 systemd-standalone-sysusers_259.5-0ubuntu3.4_amd64.deb

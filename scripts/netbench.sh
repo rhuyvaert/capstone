@@ -20,6 +20,7 @@ LABEL="${LABEL:-}"
 MPI_BASE="--prefix /apps/openmpi --mca btl_tcp_if_include 192.168.10.0/24 --mca oob_tcp_if_include 192.168.10.0/24"
 OSU="${OSU_DIR:-/apps/osu/libexec/osu-micro-benchmarks/mpi}"
 WORKERS="${WORKERS:-$(awk '!/^[[:space:]]*#/ && NF {print $1}' "$HOME/hostfile" 2> /dev/null | grep -vx "$HOST" | tr '\n' ' ')}"
+mkdir -p "$LOGS" "$DATA/results" "$RUNS_DIR" 2> /dev/null
 # change between quick and full test
 QUICK=0; [ "${1:-}" = --quick ] && { QUICK=1; shift; }
 if [ "$QUICK" = 1 ]; then
@@ -95,6 +96,25 @@ hosts_arg() { local n out=""; for n in "$@"; do out="${out:+$out,}$n:1"; done; e
 osu_val() { mpirun $MPI_BASE --bind-to core --map-by node --host "$2" -np "$3" "$OSU/$1" -m "$4" 2> /dev/null | awk -v s="$4" '$1 == s {print $2}'; }
 need_osu() { [ -x "$OSU/pt2pt/osu_latency" ] || die "OSU micro-benchmarks are not built"; }
 
+rnode() {
+    local f="$DATA/results/${1}_results.csv"
+    [ -s "$f" ] || return 0
+    awk -F, 'NR==1{old = ($3=="test_id"); next}
+             old  && $3=="A7" && $6=="rmax_node" {print $7}
+             !old && $3=="A7" && $4=="maxN" && $5=="gflops" && $6!="" {print $6}' "$f" \
+        | sort -n | awk '{a[NR]=$1} END{if (NR) print (NR%2) ? a[(NR+1)/2] : (a[NR/2] + a[NR/2+1])/2}'
+}
+ORDER=""
+order_nodes() { local n r; ORDER="$(for n in $WORKERS; do r="$(rnode "$n")"; echo "${r:-0} $n"; done | sort -rn | awk '{print $2}' | tr '\n' ' ')"; }
+config_nodes() {   # only h<k> is needed here: the head plus the k fastest workers
+    local k="${1#h}"
+    echo "$HOST $(echo $ORDER | tr ' ' '\n' | head -n "$k" | tr '\n' ' ')"
+}
+
+# stop the iperf3 servers even if the run is stopped or fails
+trap 'iperf_stop' EXIT
+trap 'iperf_stop; exit 143' TERM INT
+
 # Testing Time
 # ---------------- Main -----------------
 step_b1() {
@@ -131,6 +151,7 @@ ping_row() {
     rec B3 "$1 -> $2" packet_loss "$loss" % "n=$PING_N"
     say "B3 $1 -> $2: median ${med} ms, p99 ${p99} ms, loss ${loss}%"
 }
+
 step_b3() {
     local n a b
     for n in $WORKERS; do ping_row "$n" "$HOST" "$HEAD_IP"; done
@@ -151,7 +172,7 @@ step_b4() {
 }
 
 step_b5() {
-    need_osu
+    need_osu; order_nodes
     local rep k n nodes prog size v nw=0
     for n in $WORKERS; do nw=$(( nw + 1 )); done
     for rep in $(seq "$NET_REPS"); do
@@ -204,6 +225,8 @@ step_b7() {
 cmd="${1:-}"; shift || true
 case "$cmd" in
     netinfo|pingstat|nfsbench) "$cmd" "$@"; exit $? ;;
-    b1|b2|b3|b4|b5|b6|b7) "step_$$cmd"; exit 0 ;;
+    all) for s in b1 b2 b3 b4 b5 b6 b7; do say "===== $s ====="; "step_$s"; done; exit 0 ;;
+    b1|b2|b3|b4|b5|b6|b7) "step_$cmd"; exit 0 ;;
     *) die "unknown command for series_b.sh: $cmd" ;;
 esac
+

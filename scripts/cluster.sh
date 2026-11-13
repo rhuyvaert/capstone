@@ -5,9 +5,11 @@
 #   ./cluster.sh check                 	delegates to check_node.sh
 #   		 b                     	runs series_b.sh
 #   		 c                     	runs series_c.sh
+#		 cs			runs slurm version of series c tests
 #                start [--quick] b    	runs in background
 #                status | stop | tail	checks status of background testing
 #		 build-osu FILE		run once to build the osu microbenchmark
+
 set -uo pipefail
 
 DATA="${DATA_DIR:-/data}"
@@ -46,8 +48,7 @@ status() {
 stop() {
     local pid; pid="$(cat "$PIDF" 2> /dev/null)"
     [ -n "$pid" ] || { say "no run in progress"; return; }
-    kill -TERM -- "-$pid" 2> /dev/null && say "Stop signal sent." || say "Could not signal $pid"
-    rm -f "$PIDF"
+    kill -TERM -- "-$pid" 2> /dev/null && say "Stop signal sent." || say "Could not signal $pid (was it started with: $0 start ...?)"
 }
 
 tail_log() {
@@ -67,21 +68,37 @@ build_osu() {
         && say "OSU installed successfully into: /apps/osu" || die "OSU build failed"
 }
 
-run_modular() {
-    echo $$ > "$PIDF"
+QUICK_ARG=""
 
-    local target="$1"; shift
+run_modular() {
+    local target="$1" steps s; shift
+    mkdir -p "$LOGS" "$DATA/results" "$DATA/cluster_runs"
+    if [ "$target" != check ]; then     # long runs: one at a time, with a status file and a session log
+        if [ -f "$PIDF" ] && grep -qa cluster.sh "/proc/$(cat "$PIDF")/cmdline" 2> /dev/null; then
+            die "a run is already in progress (pid $(cat "$PIDF")). Stop it first: $0 stop"
+        fi
+        echo $$ > "$PIDF"
+        on_term() { setstatus stopped "stopped by signal"; rm -f "$PIDF"; exit 143; }
+        trap on_term TERM INT
+        trap 'rc=$?; if [ -f "$PIDF" ]; then if [ "$rc" -eq 0 ]; then setstatus finished "done"; else setstatus failed "exit code $rc"; fi; rm -f "$PIDF"; fi' EXIT
+        exec > >(tee -a "$LOGS/session_$(date +%Y%m%d_%H%M).log") 2>&1
+    fi
     case "$target" in
         check)  "$DIR/check_node.sh" "$@" ;;
-        b)      "$DIR/netbench.sh" "$@" ;;
-        c)      "$DIR/clusterbench.sh" "$@" ;;
+        b)  if [ $# -gt 0 ]; then setstatus running "b $*"; "$DIR/netbench.sh" $QUICK_ARG "$@"
+            else for s in b1 b2 b3 b4 b5 b6 b7; do setstatus running "$s"; say "===== $s ====="; "$DIR/netbench.sh" $QUICK_ARG "$s" || say "$s failed"; done; fi ;;
+        c)  if [ $# -gt 0 ]; then setstatus running "c $*"; "$DIR/clusterbench.sh" $QUICK_ARG "$@"
+            else for s in c1 c2 c4 c3 c5; do setstatus running "$s"; say "===== $s ====="; "$DIR/clusterbench.sh" $QUICK_ARG "$s" || say "$s failed"; done; fi ;;
+        cs) if [ $# -gt 0 ]; then setstatus running "cs $*"; "$DIR/slurm_clusterbench.sh" $QUICK_ARG "$@"
+            else for s in c1 c2 c3; do setstatus running "cs $s"; say "===== slurm $s ====="; "$DIR/slurm_clusterbench.sh" $QUICK_ARG "$s" || say "slurm $s failed"; done; fi ;;
         *)      die "unknown module target: $target" ;;
     esac
 }
 
+[ "${1:-}" = --quick ] && { QUICK_ARG="--quick"; shift; }
 cmd="${1:-}"; [ $# -gt 0 ] && shift
 case "$cmd" in
-    check|b|c)
+    check|b|c|cs)
         run_modular "$cmd" "$@"
 	;;
     build-osu)
@@ -93,7 +110,7 @@ case "$cmd" in
     stop)   stop; exit 0 ;;
     tail)   tail_log; exit 0 ;;
     "" | -h | --help)
-        echo "Usage: $0 {check|b|c|start|status|stop|tail}"
+        echo "Usage: $0 {check|b|c|cs|start|status|stop|tail}   (cs = Series C through Slurm)"
         exit 0
         ;;
     *) die "Unknown command '$cmd'" ;;

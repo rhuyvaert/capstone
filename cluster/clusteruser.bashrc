@@ -120,3 +120,5 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+alias checknodes='/scripts/check_nodes.sh'

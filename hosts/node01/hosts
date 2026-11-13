@@ -8,8 +8,9 @@ ff00::0 ip6-mcastprefix
 ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
 
+
 # BEGIN CLUSTER-HOSTS
-192.168.10.1   gameserver headnode master
+192.168.10.1   gamerserver headnode master
 192.168.10.11  node01
 192.168.10.12  node02
 192.168.10.13  node03
@@ -17,3 +18,4 @@ ff02::2 ip6-allrouters
 192.168.10.15  node05
 192.168.10.16  node06
 # END CLUSTER-HOSTS
+192.168.10.1 gameserver

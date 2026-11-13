@@ -19,11 +19,14 @@ libevent-dev
 libhwloc-dev
 libpmix-dev
 linux-generic
+munge
 ncurses-base
 ncurses-bin
 nfs-common
 openssh-server
 shim-signed
+slurm-client
+slurmd
 sysbench
 ubuntu-minimal
 ubuntu-server

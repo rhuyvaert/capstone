@@ -18,6 +18,8 @@ CSV="$DATA/results/cluster_results.csv"
 LOGS="$DATA/cluster_logs"
 RUNS_DIR="$DATA/cluster_runs"
 STATE="$LOGS/state.env"
+RUNID="$(date +%Y%m%d_%H%M)"
+mkdir -p "$LOGS" "$DATA/results" "$RUNS_DIR" 2> /dev/null
 HPL="${HPL_BIN:-$HOME/hpl-run/xhpl}"
 HEAD_IP="${HEAD_IP:-192.168.10.1}"
 MPI_BASE="--prefix /apps/openmpi --mca btl_tcp_if_include 192.168.10.0/24 --mca oob_tcp_if_include 192.168.10.0/24"
@@ -150,7 +152,9 @@ load_tuned() {
 hpl_dat() {
     cat <<EOF
 HPLinpack benchmark input file
-6            device out
+Innovative Computing Laboratory, University of Tennessee
+HPL.out      output file name (if any)
+6            device out (6=stdout,7=stderr,file)
 1            # problems sizes (N)
 $1            Ns
 1            # NBs

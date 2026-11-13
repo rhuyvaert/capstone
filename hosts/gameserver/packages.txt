@@ -29,6 +29,7 @@ libopenmpi-dev
 libtinfo6
 linux-generic
 mdadm
+munge
 ncurses-base
 ncurses-bin
 net-tools

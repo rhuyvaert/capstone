@@ -9,6 +9,7 @@ set -uo pipefail
 # ---------- settings ------------
 DATA="${DATA_DIR:-/data}"
 HOST="$(hostname -s)"
+DIR="$(dirname "$(readlink -f "$0")")"
 HPL="${HPL_BIN:-$HOME/hpl-run/xhpl}"
 OSU="${OSU_DIR:-/apps/osu/libexec/osu-micro-benchmarks/mpi}"
 HOSTFILE="${HOSTFILE:-$HOME/hostfile}"
@@ -25,18 +26,19 @@ die() { echo "ERROR: $*" >&2; exit 1; }		# callout for a failure
 have() { command -v "$1" > /dev/null 2>&1; }	# supress errors and redirect them to stdout
 rsh() {						# determine if local shell or ssh to connect
     local n=$1; shift
-    if [ "$n" = "HOST" ]; then sh -c "$*";
-    else ssh -nn -o BatchMode=yes -o ConnectTimeout=5 "$n" "$@";
+    if [ "$n" = "$HOST" ]; then sh -c "$*";
+    else ssh -n -o BatchMode=yes -o ConnectTimeout=5 "$n" "$@";
     fi
 }
-rnode() {  # parse csv files for each node and get required information to sort nodes by speed
-    local f="$DATA/results/${1}_results.csv" ov="RNODE_$1"
-    [ -n "${!ov:-}" ] && { echo "${!ov}"; return; }
+rnode() {					# parse csv files for each node and get required information to sort nodes by speed
+    local f="$DATA/results/${1}_results.csv"
     [ -s "$f" ] || return 0
-    awk -F, 'NR==1{next}
-             $3=="A7" && $5=="gflops" && $6!="" {print $6}' "$f" \
-        | sort -n | awk '{a[NR]=$1} END{if (NR) print (NR%2) ? a[(NR+1)/2] : (a[NR/2] + a[(NR/2)+1])/2}'
+    awk -F, 'NR==1{old = ($3=="test_id"); next}
+             old  && $3=="A7" && $6=="rmax_node" {print $7}
+             !old && $3=="A7" && $4=="maxN" && $5=="gflops" && $6!="" {print $6}' "$f" \
+        | sort -n | awk '{a[NR]=$1} END{if (NR) print (NR%2) ? a[(NR+1)/2] : (a[NR/2] + a[NR/2+1])/2}'
 }
+
 cores()    { lscpu -p=CORE,SOCKET | grep -v '^#' | sort -u | wc -l; }
 threads()  { getconf _NPROCESSORS_ONLN; }
 mem_kb()   { awk '/^MemTotal:/{print $2}' /proc/meminfo; }
@@ -58,6 +60,7 @@ step_check() {
     miss() { printf '  MISSING  %s\n' "$*"; bad=$(( bad + 1 )); }
     note() { printf '  note     %s\n' "$*"; }
 
+    echo "	Cluster Health Check Up"
     echo "== head node ($HOST): base programs & environment"
     for t in awk sed grep sort cut tr tee df lscpu lsblk getconf free pkill mktemp timeout; do
         have "$t" && ok "$t" || miss "$t (part of base system)"
@@ -80,7 +83,10 @@ step_check() {
             fi
             ok "$n: ssh connection active"
             for t in iperf3 sysbench ping dd; do
-                rsh "$n" "command -v $t > /dev/null" && ok "$n: $t available" || note "$n: $t missing (can be installed via offline repo)"
+                rsh "$n" "command -v $t > /dev/null" && ok "$n: $t available" || miss "$n: $t missing (B2/B6 need iperf3, C1 needs sysbench: add it to the offline repo)"
+            done
+            for t in netbench.sh clusterbench.sh; do
+                rsh "$n" "[ -x $DIR/$t ] && [ -x $HPL ]" && ok "$n: sees $DIR/$t and xhpl" || miss "$n: cannot run $DIR/$t or $HPL (keep the scripts in a shared folder and chmod +x)"
             done
             r="$(rnode "$n")"
             [ -n "$r" ] && ok "$n: Series A HPL baseline ($r GFLOPS)" || note "$n: no Series A HPL result found (needed for node ordering)"

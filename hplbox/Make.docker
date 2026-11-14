@@ -1,0 +1,34 @@
+# HPL 2.3 arch file for the container. Same libraries and install paths as the bare-metal build.
+# Compare CCFLAGS and LAlib with your bare-metal Make file (dockerimg.sh stage prints them) and edit here if they differ.
+SHELL        = /bin/sh
+CD           = cd
+CP           = cp
+LN_S         = ln -s
+MKDIR        = mkdir
+RM           = /bin/rm -f
+TOUCH        = touch
+ARCH         = docker
+TOPdir       = /src/hpl
+INCdir       = $(TOPdir)/include
+BINdir       = $(TOPdir)/bin/$(ARCH)
+LIBdir       = $(TOPdir)/lib/$(ARCH)
+HPLlib       = $(LIBdir)/libhpl.a
+MPdir        = /apps/openmpi
+MPinc        = -I$(MPdir)/include
+MPlib        = -L$(MPdir)/lib -lmpi
+LAdir        = /apps/openblas
+LAinc        = -I$(LAdir)/include
+LAlib        = -L$(LAdir)/lib -lopenblas -Wl,-rpath,$(LAdir)/lib
+F2CDEFS      =
+HPL_INCLUDES = -I$(INCdir) -I$(INCdir)/$(ARCH) $(LAinc) $(MPinc)
+HPL_LIBS     = $(HPLlib) $(LAlib) $(MPlib)
+HPL_OPTS     = -DHPL_CALL_CBLAS
+HPL_DEFS     = $(F2CDEFS) $(HPL_OPTS) $(HPL_INCLUDES)
+CC           = /apps/openmpi/bin/mpicc
+CCNOOPT      = $(HPL_DEFS)
+CCFLAGS      = $(HPL_DEFS) -O3 -fomit-frame-pointer -funroll-loops -Wno-error=implicit-function-declaration -Wno-implicit-int
+LINKER       = $(CC)
+LINKFLAGS    = $(CCFLAGS)
+ARCHIVER     = ar
+ARFLAGS      = r
+RANLIB       = echo

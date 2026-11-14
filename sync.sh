@@ -109,14 +109,11 @@ copy "$WWW_DIR/autoinstall/user-data"	autoinstall/user-data redact
 snap pxe/cluster-repo-packages.txt bash -c "ls '$WWW_DIR/cluster-repo' | grep -F .deb"
 
 # 2. Cluster and Network File Share ------------------------------------------------------
-echo "[2/7] cluster scripts from $SCRIPTS_DIR"
-copy_dir "$SCRIPTS_DIR" scripts -name '* .sh'
-chmod +x scripts/*.sh 2>/dev/null || true
-copy "$BENCH_DIR/benchmark.sh"		scripts/benchmark.sh
-copy "$BENCH_DIR/check_node.sh"		scripts/check_node.sh
-copy "$BENCH_DIR/netbench.sh"		scripts/netbench.sh
-copy "$BENCH_DIR/clusterbench.sh"	scripts/clusterbench.sh
-copy "$BENCH_DIR/cluster.sh"		scripts/cluster.sh
+echo "[2/7] cluster scripts from $SCRIPTS_DIR and Docker scripts from $BENCH_DIR/hplbox"
+copy_dir "$SCRIPTS_DIR" scripts -name '*.sh'
+copy_dir "$BENCH_DIR/hplbox"        hplbox
+copy_dir "$BENCH_DIR"	        	scripts -name '*.sh'
+chmod +x scripts/*.sh scripts/bench/*.sh slurm/*.sh docker/*.sh docker/entrypoint.sh 2>/dev/null || true
 
 # 3. Headnode config files ---------------------------------------------------------------
 echo "[3/7] Head node configuration files from ($HOST)"

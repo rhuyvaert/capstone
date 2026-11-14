@@ -7,7 +7,7 @@
 
 ARG BASE=ubuntu:26.04
 
-# ---------------------------------------------------------------- build stage
+# -------------------------------- build stage --------------------------------
 FROM ${BASE} AS build
 ARG DEBIAN_FRONTEND=noninteractive
 ARG OMPI_CONFIGURE="--with-pmix --with-libevent"
@@ -44,7 +44,7 @@ RUN { echo "built $(date -Iseconds)"; /apps/openmpi/bin/ompi_info | grep -E 'Ope
       grep -E 'OPENBLAS_VERSION|MAX_CPU_NUMBER' /apps/openblas/include/openblas_config.h || true; \
       sha256sum *.src; } > /apps/hplbox-build.txt
 
-# -------------------------------------------------------------- runtime stage
+# ------------------------------------ runtime stage --------------------------
 FROM ${BASE}
 ARG DEBIAN_FRONTEND=noninteractive
 ARG CLUSTER_UID=2001

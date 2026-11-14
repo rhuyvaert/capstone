@@ -1,6 +1,8 @@
 #!/bin/bash
-# dockerimg.sh - build ONE image (OpenMPI + OpenBLAS + HPL + OSU + sysbench + iperf3) and put the identical image on every node.
-# Keep this folder in /apps/hplbox/ (shared, so every node sees it at the same path). Order of work:
+# docker image shell that builds one image containing all the needed programs and files
+# (OpenMPI + OpenBLAS + HPL + OSU + sysbench + iperf3) to be put on all nodes.
+# stored in /apps/hplbox/ this way it is shared between all nodes and they see the same exact image.
+# execute commands in this order to fully set up
 #   1. ./dockerimg.sh keys                 on the head, as clusteruser: ssh keys for the containers (in /data/docker/ssh)
 #   2. ./dockerimg.sh stage                collect the source tarballs and show what the bare-metal build used, so they match
 #   3. ./dockerimg.sh build                build the image on the head (time and size are recorded for D5)
@@ -42,7 +44,7 @@ rsh() {   # rsh NODE "command string": local shell for this machine, ssh for the
     if [ "$n" = "$HOST" ]; then bash -c "$*"; else ssh -n -o BatchMode=yes -o ConnectTimeout=5 "$n" "$@"; fi
 }
 
-# ---------------------------------------------------------------- keys
+# --------------------------- keys -----------------------------
 cmd_keys() {
     [ "$(id -u)" = "$CLUSTER_UID" ] || say "WARNING: you are UID $(id -u), not $CLUSTER_UID: the containers run as $CLUSTER_UID and must be able to read these keys. Run as clusteruser."
     mkdir -p "$KEYDIR"; chmod 700 "$KEYDIR"
@@ -60,7 +62,7 @@ EOF
     say "keys ready in $KEYDIR"
 }
 
-# ---------------------------------------------------------------- stage / build
+# ---------------------- stage / build -----------------------------
 pick() {   # pick NAME OVERRIDE glob...   -> copies the newest match to the build context as NAME.src
     local name=$1 override=$2 f; shift 2
     if [ -n "$override" ]; then f="$override"; else f="$(ls -t "$@" 2> /dev/null | head -n 1)"; fi
@@ -115,7 +117,7 @@ cmd_build() {
     docker run --rm "$IMAGE" cat /apps/hplbox-build.txt | sed 's/^/    /'
 }
 
-# ---------------------------------------------------------------- registry / push / pull / node
+# -------------------------------- registry / push / pull / node --------------------------------
 cmd_registry() {
     have docker || die "docker is not installed here"
     docker ps -a --format '{{.Names}}' | grep -qx hplreg && { say "registry container already exists"; docker start hplreg > /dev/null; return; }
@@ -163,7 +165,7 @@ cmd_node() {   # run with sudo on every worker
     docker info > /dev/null 2>&1 && say "docker: ok on $HOST" || say "docker does not answer on $HOST"
 }
 
-# ---------------------------------------------------------------- containers
+# -------------------------- containers --------------------------------------
 cmd_up() {
     local n
     for n in $ALL; do
